@@ -89,24 +89,20 @@ Download sample videos from the provided link : https://drive.google.com/drive/f
 
 🚀 Future Improvements
 
-Web-based dashboard (React + FastAPI)
+1.Web-based dashboard (React + FastAPI)
 
-Live CCTV integration
+2.Live CCTV integration
 
-More accurate emission modeling
+3.More accurate emission modeling
 
-Cloud deployment
+4.Cloud deployment
 
 👨‍💻 Contributors
 
 Ayush M Singh
-
 Venkata Sriram Topalli
-
 Bishal Kumar Mandal
-
 Kanhaiya
-
 Ojas Arora
 
 
