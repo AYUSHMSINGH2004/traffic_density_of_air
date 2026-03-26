@@ -98,7 +98,6 @@ Download sample videos from the provided link : https://drive.google.com/drive/f
 4.Cloud deployment
 
 👨‍💻 Contributors
-
 Ayush M Singh
 Venkata Sriram Topalli
 Bishal Kumar Mandal
