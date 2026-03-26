@@ -88,17 +88,27 @@ Large video files are not included due to GitHub size limits
 Download sample videos from the provided link : https://drive.google.com/drive/folders/1wLa29FiB51TicFNICPSvkHXmiY3Wn7Y_?usp=drive_link
 
 🚀 Future Improvements
+
 Web-based dashboard (React + FastAPI)
+
 Live CCTV integration
+
 More accurate emission modeling
+
 Cloud deployment
 
 👨‍💻 Contributors
+
 Ayush M Singh
+
 Venkata Sriram Topalli
+
 Bishal Kumar Mandal
+
 Kanhaiya
+
 Ojas Arora
+
 
 📄 License
 
