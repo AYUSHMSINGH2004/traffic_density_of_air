@@ -58,7 +58,7 @@ This project leverages computer vision to analyze traffic flow and calculate car
 
 ## ▶️ Installation & Setup
 
-```bash
+bash
 git clone https://github.com/AYUSHMSINGH2004/traffic_density_of_air.git
 cd traffic_density_of_air
 pip install -r requirements.txt
@@ -102,21 +102,9 @@ Ojas Arora
 
 This project is for academic and research purposes.
 
-
----
-
 ## 🔥 Why this README is strong
 - Looks **professional**
 - Easy for **recruiters to understand**
 - Highlights **AI + real-world impact**
 - Clean structure (very important)
 
----
-
-## 🚀 Next (HIGHLY RECOMMENDED)
-I can upgrade this to:
-- ⭐ **Top 1% GitHub README (with badges + GIF demo)**
-- 🌐 Help you **deploy this project**
-- 📈 Make it **resume-ready bullet points**
-
-Just say 👍
