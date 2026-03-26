@@ -92,11 +92,11 @@ traffic_density_of_air/
 
 👨‍💻 Contributors
 
-Ayush M Singh
-Venkata Sriram Topalli
-Bishal Kumar Mandal
-Kanhaiya
-Ojas Arora
+1. Ayush M Singh
+2. Venkata Sriram Topalli
+3. Bishal Kumar Mandal
+4. Kanhaiya
+5. Ojas Arora
 
 
 📄 License
