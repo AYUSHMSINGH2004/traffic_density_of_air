@@ -2,13 +2,11 @@
 
 An AI-powered computer vision system that monitors traffic and estimates real-time CO2 emissions using YOLOv8. The system detects, tracks, and classifies vehicles from video input and provides a live dashboard of environmental impact.
 
----
 
 ## 📌 Project Overview
 
 This project leverages computer vision to analyze traffic flow and calculate carbon dioxide (CO2) emissions in real time. By detecting different vehicle types and assigning emission values, it provides immediate insights into environmental impact. :contentReference[oaicite:0]{index=0}
 
----
 
 ## ✨ Features
 
@@ -24,7 +22,6 @@ This project leverages computer vision to analyze traffic flow and calculate car
 - 📄 **Automated Summary Report**  
   Generates final emission statistics after execution.
 
----
 
 ## 🛠️ Tech Stack
 
@@ -33,7 +30,6 @@ This project leverages computer vision to analyze traffic flow and calculate car
 - **UI Handling:** OpenCV-based custom dashboard
 - **File Selection:** Tkinter
 
----
 
 ## 🚘 Vehicle Emission Metrics
 
@@ -44,7 +40,6 @@ This project leverages computer vision to analyze traffic flow and calculate car
 | Bus    | 800                 |
 | Truck  | 1000                |
 
----
 
 ## ⚙️ How It Works
 
@@ -54,7 +49,6 @@ This project leverages computer vision to analyze traffic flow and calculate car
 4. Live dashboard displays results
 5. Final summary is printed in terminal :contentReference[oaicite:1]{index=1}
 
----
 
 ## ▶️ Installation & Setup
 
@@ -83,21 +77,18 @@ traffic_density_of_air/
 
 ⚠️ Notes
 
-Large video files are not included due to GitHub size limits
-
-Download sample videos from the provided link : https://drive.google.com/drive/folders/1wLa29FiB51TicFNICPSvkHXmiY3Wn7Y_?usp=drive_link
+1.Large video files are not included due to GitHub size limits
+2.Download sample videos from the provided link : https://drive.google.com/drive/folders/1wLa29FiB51TicFNICPSvkHXmiY3Wn7Y_?usp=drive_link
 
 🚀 Future Improvements
 
 1.Web-based dashboard (React + FastAPI)
-
 2.Live CCTV integration
-
 3.More accurate emission modeling
-
 4.Cloud deployment
 
 👨‍💻 Contributors
+
 Ayush M Singh
 Venkata Sriram Topalli
 Bishal Kumar Mandal
