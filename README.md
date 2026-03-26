@@ -105,7 +105,7 @@ This project is for academic and research purposes.
 
 ---
 
-🔥 Why this README is strong
+## 🔥 Why this README is strong
 - Looks **professional**
 - Easy for **recruiters to understand**
 - Highlights **AI + real-world impact**
