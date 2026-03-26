@@ -83,8 +83,11 @@ traffic_density_of_air/
 🚀 Future Improvements
 
 1.Web-based dashboard (React + FastAPI)
+
 2.Live CCTV integration
+
 3.More accurate emission modeling
+
 4.Cloud deployment
 
 👨‍💻 Contributors
