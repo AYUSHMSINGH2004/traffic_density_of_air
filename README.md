@@ -98,11 +98,4 @@ traffic_density_of_air/
 
 📄 License
 
-This project is for academic and research purposes.
-
-## 🔥 Why this README is strong
-- Looks **professional**
-- Easy for **recruiters to understand**
-- Highlights **AI + real-world impact**
-- Clean structure (very important)
-
+This project is for academic and research purpos
