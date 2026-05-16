@@ -98,4 +98,4 @@ traffic_density_of_air/
 
 📄 License
 
-This project is for academic and research purpos
+This project is for academic and research purpose.
