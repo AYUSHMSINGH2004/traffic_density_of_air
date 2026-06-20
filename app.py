@@ -1,145 +1,268 @@
-import gradio as gr
+import os
+import tempfile
+from collections import defaultdict
+
 import cv2
-import numpy as np
+import gradio as gr
 from ultralytics import YOLO
 
 
-model = YOLO("yolov8n.pt")
+# ==========================================================
+# MODEL
+# ==========================================================
 
+MODEL_PATH = "yolov8n.pt"
+
+model = YOLO(MODEL_PATH)
+
+
+# ==========================================================
+# VEHICLE CO2 DATA
+# ==========================================================
 
 VEHICLE_DATA = {
     2: {"name": "Car", "co2": 120},
-    3: {"name": "Bike", "co2": 80},
+    3: {"name": "Motorcycle", "co2": 80},
     5: {"name": "Bus", "co2": 800},
-    7: {"name": "Truck", "co2": 1000}
+    7: {"name": "Truck", "co2": 1000},
 }
 
 
-def process_video(video):
+# ==========================================================
+# VIDEO PROCESSING
+# ==========================================================
 
-    vehicle_counts = {
-        "Car":0,
-        "Bike":0,
-        "Bus":0,
-        "Truck":0
-    }
+def process_video(video_path):
 
-    total_co2 = {
-        "Car":0,
-        "Bike":0,
-        "Bus":0,
-        "Truck":0
-    }
+    if video_path is None:
+        raise gr.Error("Please upload a traffic video.")
 
+    vehicle_counts = defaultdict(int)
+    total_emissions = defaultdict(int)
 
-    cap = cv2.VideoCapture(video)
+    counted_track_ids = set()
 
-    output = []
+    cap = cv2.VideoCapture(video_path)
 
-    while cap.isOpened():
+    if not cap.isOpened():
+        raise gr.Error("Unable to read uploaded video.")
+
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fps = max(1, int(cap.get(cv2.CAP_PROP_FPS)))
+
+    output_path = os.path.join(
+        tempfile.gettempdir(),
+        "processed_traffic_output.mp4"
+    )
+
+    fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+
+    writer = cv2.VideoWriter(
+        output_path,
+        fourcc,
+        fps,
+        (width, height)
+    )
+
+    frame_count = 0
+
+    while True:
 
         success, frame = cap.read()
 
         if not success:
             break
 
+        frame_count += 1
 
         results = model.track(
             frame,
             persist=True,
-            classes=[2,3,5,7],
+            classes=[2, 3, 5, 7],
             verbose=False
         )
 
-
-        if results[0].boxes.id is not None:
+        if (
+            results
+            and results[0].boxes is not None
+            and results[0].boxes.id is not None
+        ):
 
             boxes = results[0].boxes.xyxy.cpu()
-            ids = results[0].boxes.id.int().cpu()
-            classes = results[0].boxes.cls.int().cpu()
+            track_ids = results[0].boxes.id.int().cpu().tolist()
+            class_ids = results[0].boxes.cls.int().cpu().tolist()
 
+            for box, track_id, class_id in zip(
+                boxes,
+                track_ids,
+                class_ids
+            ):
 
-            for box,track_id,class_id in zip(boxes,ids,classes):
+                if class_id not in VEHICLE_DATA:
+                    continue
 
-                info = VEHICLE_DATA[int(class_id)]
+                vehicle_info = VEHICLE_DATA[class_id]
 
-                name = info["name"]
+                vehicle_name = vehicle_info["name"]
 
-                vehicle_counts[name]+=1
-                total_co2[name]+=info["co2"]
+                # Count each vehicle only once
+                if track_id not in counted_track_ids:
 
+                    counted_track_ids.add(track_id)
 
-                x1,y1,x2,y2 = map(int,box)
+                    vehicle_counts[vehicle_name] += 1
+
+                    total_emissions[vehicle_name] += (
+                        vehicle_info["co2"]
+                    )
+
+                x1, y1, x2, y2 = map(int, box)
 
                 cv2.rectangle(
                     frame,
-                    (x1,y1),
-                    (x2,y2),
-                    (0,255,0),
+                    (x1, y1),
+                    (x2, y2),
+                    (0, 255, 0),
                     2
                 )
 
+                label = f"{vehicle_name} | ID {track_id}"
 
                 cv2.putText(
                     frame,
-                    name,
-                    (x1,y1-10),
+                    label,
+                    (x1, y1 - 10),
                     cv2.FONT_HERSHEY_SIMPLEX,
-                    .8,
-                    (0,255,0),
+                    0.6,
+                    (0, 255, 0),
                     2
                 )
 
-
-        output.append(cv2.cvtColor(frame,cv2.COLOR_BGR2RGB))
-
+        writer.write(frame)
 
     cap.release()
+    writer.release()
+
+    total_co2 = sum(total_emissions.values())
+    total_vehicles = sum(vehicle_counts.values())
+
+    report = f"""
+# Traffic Emission Analysis Report
+
+### Summary
+
+• Total Vehicles Detected: {total_vehicles}
+
+• Total Estimated CO₂ Emission: {total_co2:,} g/km
+
+---
+
+## Vehicle Breakdown
+"""
+
+    for vehicle in ["Car", "Motorcycle", "Bus", "Truck"]:
+
+        count = vehicle_counts.get(vehicle, 0)
+        emission = total_emissions.get(vehicle, 0)
+
+        report += f"""
+### {vehicle}
+
+- Count: {count}
+- Estimated CO₂: {emission:,} g/km
+"""
+
+    report += f"""
+
+---
+
+## Processing Statistics
+
+- Frames Processed: {frame_count}
+- Unique Tracked Vehicles: {len(counted_track_ids)}
+
+---
+
+Generated by Traffic CO₂ Emission Monitor
+"""
+
+    return output_path, report
 
 
-    report = ""
+# ==========================================================
+# UI
+# ==========================================================
 
-    total = 0
-
-    for k in vehicle_counts:
-
-        report += (
-            f"{k}: {vehicle_counts[k]} "
-            f"CO2={total_co2[k]} g/km\n"
-        )
-
-        total += total_co2[k]
+custom_css = """
+.gradio-container {
+    max-width: 1400px !important;
+}
+"""
 
 
-    report += f"\nTOTAL CO2: {total} g/km"
+with gr.Blocks(
+    theme=gr.themes.Soft(),
+    css=custom_css,
+    title="Traffic CO₂ Emission Monitor"
+) as demo:
+
+    gr.Markdown(
+        """
+# 🚦 Traffic CO₂ Emission Monitor
+
+### AI-Powered Smart Traffic Analytics
+
+Detects vehicles using YOLOv8 tracking and estimates
+traffic-related carbon emissions from uploaded videos.
+
+Supported Classes:
+- 🚗 Cars
+- 🏍 Motorcycles
+- 🚌 Buses
+- 🚚 Trucks
+"""
+    )
+
+    with gr.Row():
+
+        with gr.Column(scale=1):
+
+            video_input = gr.Video(
+                label="Upload Traffic Video"
+            )
+
+            analyze_btn = gr.Button(
+                "Analyze Traffic",
+                variant="primary"
+            )
+
+        with gr.Column(scale=2):
+
+            processed_video = gr.Video(
+                label="Processed Video Output"
+            )
+
+    report_output = gr.Markdown(
+        label="Emission Report"
+    )
+
+    analyze_btn.click(
+        fn=process_video,
+        inputs=video_input,
+        outputs=[
+            processed_video,
+            report_output
+        ]
+    )
+
+    gr.Markdown(
+        """
+---
+Developed using YOLOv8 • OpenCV • Gradio • Hugging Face Spaces
+"""
+    )
 
 
-    return output, report
-
-
-
-demo = gr.Interface(
-
-    fn=process_video,
-
-    inputs=gr.Video(
-        label="Upload Traffic Video"
-    ),
-
-    outputs=[
-        gr.Gallery(
-            label="Processed Frames"
-        ),
-        gr.Textbox(
-            label="Emission Report"
-        )
-    ],
-
-    title="🚦 Traffic CO2 Emission Monitor",
-    description=
-    "YOLOv8 vehicle detection and CO2 estimation"
-
-)
-
-
-demo.launch()
+if __name__ == "__main__":
+    demo.launch()
