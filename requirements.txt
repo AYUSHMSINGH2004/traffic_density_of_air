@@ -1,7 +1,5 @@
-gradio>=5.0.0
-opencv-python-headless
-ultralytics
-numpy
-torch
-torchvision
+gradio==5.35.0
+ultralytics==8.3.170
+opencv-python-headless==4.11.0.86
+numpy==1.26.4
 pillow
