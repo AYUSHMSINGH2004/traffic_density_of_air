@@ -1,101 +1,201 @@
-# 🚦 Traffic CO2 Emission Monitor
+# 🚦 Traffic CO₂ Emission Monitor
 
-An AI-powered computer vision system that monitors traffic and estimates real-time CO2 emissions using YOLOv8. The system detects, tracks, and classifies vehicles from video input and provides a live dashboard of environmental impact.
+An AI-powered computer vision system that detects, tracks, and classifies vehicles from traffic videos to estimate **real-time carbon dioxide (CO₂) emissions** using **YOLOv8** and **OpenCV**.
 
+---
+
+## 🌐 Live Demo
+
+🚀 Try the deployed web application here:
+
+👉 https://ayushmsingh2004-traffic-co2-monitor.hf.space
+
+---
 
 ## 📌 Project Overview
 
-This project leverages computer vision to analyze traffic flow and calculate carbon dioxide (CO2) emissions in real time. By detecting different vehicle types and assigning emission values, it provides immediate insights into environmental impact. :contentReference[oaicite:0]{index=0}
+Traffic congestion is one of the major contributors to urban air pollution and greenhouse gas emissions. This project leverages **Artificial Intelligence**, **Computer Vision**, and **Deep Learning** to monitor traffic density and estimate environmental impact in real time.
 
+The system analyzes uploaded traffic videos, detects different vehicle types, and calculates estimated CO₂ emissions based on vehicle-specific emission metrics.
 
-## ✨ Features
+This enables:
+- Smart traffic monitoring
+- Environmental impact analysis
+- Carbon footprint estimation
+- Sustainable urban planning
 
-- 🚗 **Real-Time Vehicle Detection & Tracking**  
-  Detects and tracks vehicles using YOLOv8.
+---
 
-- 📊 **Dynamic CO2 Emission Calculation**  
-  Calculates emissions (g/km) based on vehicle type.
+## ✨ Key Features
 
-- 🖥️ **Live Dashboard Visualization**  
-  Displays bounding boxes, vehicle counts, and total emissions.
+### 🚗 Real-Time Vehicle Detection
+Detects and classifies vehicles using **YOLOv8 (Ultralytics)**.
 
-- 📄 **Automated Summary Report**  
-  Generates final emission statistics after execution.
+### 📊 CO₂ Emission Analytics
+Calculates estimated CO₂ emissions dynamically based on vehicle type.
 
+### 🎥 Video Processing Dashboard
+Provides:
+- AI-annotated output video
+- Vehicle detection statistics
+- Emission analysis
+- Summary report
+
+### 🌐 Cloud Deployment
+Fully deployed as an interactive web application using **Hugging Face Spaces**.
+
+---
 
 ## 🛠️ Tech Stack
 
-- **Machine Learning:** YOLOv8 (Ultralytics)
-- **Computer Vision:** OpenCV, NumPy
-- **UI Handling:** OpenCV-based custom dashboard
-- **File Selection:** Tkinter
+### Machine Learning
+- YOLOv8 (Ultralytics)
 
+### Computer Vision
+- OpenCV
+- NumPy
+
+### Frontend / UI
+- Gradio
+- Custom HTML / CSS Dashboard
+
+### Deployment
+- Hugging Face Spaces
+
+---
 
 ## 🚘 Vehicle Emission Metrics
 
-| Vehicle | CO2 Emission (g/km) |
-|--------|---------------------|
-| Bike   | 80                  |
-| Car    | 120                 |
-| Bus    | 800                 |
-| Truck  | 1000                |
+| Vehicle Type | Estimated CO₂ Emission |
+|--------------|------------------------|
+| 🏍 Motorcycle | 80 g/km |
+| 🚗 Car | 120 g/km |
+| 🚌 Bus | 800 g/km |
+| 🚚 Truck | 1000 g/km |
 
+---
 
-## ⚙️ How It Works
+## ⚙️ Working Pipeline
 
-1. Select a video file (.mp4/.avi)
-2. Model detects and tracks vehicles
-3. CO2 emissions are calculated in real-time
-4. Live dashboard displays results
-5. Final summary is printed in terminal :contentReference[oaicite:1]{index=1}
+```text
+Traffic Video Input
+        ↓
+YOLOv8 Vehicle Detection
+        ↓
+Vehicle Classification
+        ↓
+CO₂ Emission Calculation
+        ↓
+Video Annotation + Report Generation
+```
 
+---
 
-## ▶️ Installation & Setup
+## 📂 Project Structure
 
-bash
+```bash
+traffic_density_of_air/
+│
+├── app.py                 # Main deployed Gradio app
+├── requirements.txt      # Project dependencies
+├── README.md
+├── yolov8n.pt            # YOLO model weights
+├── Data/                 # Sample traffic videos
+└── traffic_co2.py        # Local desktop version
+```
+
+---
+
+## ▶️ Installation & Setup (Local)
+
+Clone the repository:
+
+```bash
 git clone https://github.com/AYUSHMSINGH2004/traffic_density_of_air.git
 cd traffic_density_of_air
+```
+
+Install dependencies:
+
+```bash
 pip install -r requirements.txt
+```
 
+Run locally:
 
-▶️ Run the Project
+```bash
+python app.py
+```
 
-python traffic_co2.py
+---
 
-📂 Project Structure
+## 🎯 Use Cases
 
-traffic_density_of_air/
-│── Data/                
-│── traffic_co2.py       # Main script
-│── yolov8n.pt           # Model file
-│── README.md
-│── .gitignore
+- Smart City Traffic Monitoring
+- Pollution Analysis
+- Environmental Research
+- Urban Planning
+- Carbon Footprint Estimation
+- AI-Based Sustainability Solutions
 
-📸 Demo
+---
 
-👉 Add your demo video link here (Google Drive / YouTube)
+## 📸 Demo
 
-⚠️ Notes
+Use the live application:
 
-1.Large video files are not included due to GitHub size limits
-2.Download sample videos from the provided link : https://drive.google.com/drive/folders/1wLa29FiB51TicFNICPSvkHXmiY3Wn7Y_?usp=drive_link
+👉 https://ayushmsingh2004-traffic-co2-monitor.hf.space
 
-🚀 Future Improvements
+Upload a traffic video and receive:
 
-1.Web-based dashboard (React + FastAPI)
+✅ Processed AI-annotated video  
+✅ Vehicle detection statistics  
+✅ CO₂ emission analysis report  
 
-2.Live CCTV integration
+Sample traffic videos:
 
-3.More accurate emission modeling
+👉 https://drive.google.com/drive/folders/1wLa29FiB51TicFNICPSvkHXmiY3Wn7Y_?usp=sharing
 
-4.Cloud deployment
+---
 
-👨‍💻 Contributors
+## ⚠️ Notes
 
-1. Ayush M Singh
-2. Venkata Sriram Topalli
+- Large sample videos are excluded due to GitHub size limitations.
+- For best performance, use compressed `.mp4` videos.
+- Emission values are approximate and intended for research/demo purposes.
 
+---
 
-📄 License
+## 🚀 Future Improvements
 
-This project is for academic and research purpose.
+- Live CCTV Feed Integration
+- Advanced Real-Time Analytics Dashboard
+- More Accurate Emission Modeling
+- Vehicle Speed Estimation
+- Multi-Camera Monitoring
+- Cloud GPU Optimization
+
+---
+
+## 👨‍💻 Contributors
+
+| Contributor | Responsibilities |
+|------------|------------------|
+| Ayush M Singh | Project Development, AI Integration, Deployment |
+| Venkata Sriram Topalli | Project Development, AI Integration, System Design, Testing |
+
+---
+
+## 📄 License
+
+This project is developed for **academic, research, and educational purposes**.
+
+---
+
+## ⭐ Support
+
+If you found this project useful:
+
+- Star the repository ⭐
+- Fork the project 🍴
+- Share feedback 💡
